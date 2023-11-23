@@ -5,6 +5,6 @@ import react from '@vitejs/plugin-react-swc'
 export default defineConfig({
   plugins: [react()],
   base: process.env.GITHUB_PAGES
-    ? '/isbn-bulksearch/' // レポジトリ名を設定
+    ? 'isbn-bulksearch' // レポジトリ名を設定
     : './'
 })

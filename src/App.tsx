@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { BrowserRouter } from 'react-router-dom';
 import { Container, TextField, Button, Box, Card, CardContent, Typography, Grid } from '@mui/material';
 import axios from 'axios';
 
@@ -91,39 +90,37 @@ const App = () => {
   };
 
   return (
-    <BrowserRouter basename={import.meta.env.BASE_URL}>
-      <Container maxWidth="md">
-        <Box sx={{ flexGrow: 1, padding: 3 }}>
-          <Grid item xs={12}>
-            <Typography variant="h3" component="div" gutterBottom>
-              ISBN Search
-            </Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              label="ISBN"
-              multiline
-              rows={10}
-              value={isbnInput}
-              onChange={(e) => setIsbnInput(e.target.value)}
-              fullWidth
-              margin="normal"
+    <Container maxWidth="md">
+      <Box sx={{ flexGrow: 1, padding: 3 }}>
+        <Grid item xs={12}>
+          <Typography variant="h3" component="div" gutterBottom>
+            ISBN Search
+          </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            label="ISBN"
+            multiline
+            rows={10}
+            value={isbnInput}
+            onChange={(e) => setIsbnInput(e.target.value)}
+            fullWidth
+            margin="normal"
 
-            />
-            <Button variant="contained" onClick={handleSearch} disabled={loading}>
-              {loading ? 'Searching...' : 'Search'}
-            </Button>
+          />
+          <Button variant="contained" onClick={handleSearch} disabled={loading}>
+            {loading ? 'Searching...' : 'Search'}
+          </Button>
+        </Grid>
+        <Grid container spacing={2} direction="column" alignItems="center" justifyContent="center">
+          <Grid item xs={12}>
+            {searchResults.map((result, index) => (
+              <SearchResult key={index} result={result} />
+            ))}
           </Grid>
-          <Grid container spacing={2} direction="column" alignItems="center" justifyContent="center">
-            <Grid item xs={12}>
-              {searchResults.map((result, index) => (
-                <SearchResult key={index} result={result} />
-              ))}
-            </Grid>
-          </Grid>
-        </Box>
-      </Container>
-    </BrowserRouter>
+        </Grid>
+      </Box>
+    </Container>
   );
 };
 
