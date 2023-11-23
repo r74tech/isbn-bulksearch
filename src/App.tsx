@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { Container, TextField, Button, Box, Card, CardContent, Typography, Grid } from '@mui/material';
 import axios from 'axios';
 
-function formatPubDate(pubDate) {
+function formatPubDate(pubDate: string): string {
   if (pubDate.length === 8) {
     // YYYYMMDD 形式
     return `${pubDate.substring(0, 4)}-${pubDate.substring(4, 6)}-${pubDate.substring(6)}`;
@@ -16,9 +16,9 @@ function formatPubDate(pubDate) {
   }
 }
 
-function validateIsbnList(isbnList) {
-  const invalidIsbns = [];
-  const validIsbns = [];
+function validateIsbnList(isbnList: string[]) {
+  const invalidIsbns: { index: number, isbn: string }[] = [];
+  const validIsbns: string[] = [];
 
   isbnList.forEach((isbn, index) => {
     // ISBNの基本的なバリデーション: 長さが10または13であり、数字のみで構成される
@@ -32,21 +32,16 @@ function validateIsbnList(isbnList) {
   return { validIsbns, invalidIsbns };
 }
 
-
-
-
 const App = () => {
   const [isbnInput, setIsbnInput] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [showDetails, setShowDetails] = useState(false);
-
   const handleSearch = async () => {
     setLoading(true);
     setSearchResults([]); // 検索結果をリセット
 
     try {
-      const isbnList = isbnInput.split(/,|\n/).map(isbn => isbn.trim());
+      const isbnList = isbnInput.split(/,|\n/).map(isbn => isbn.replace(/-/g, '').trim());
       const { validIsbns, invalidIsbns } = validateIsbnList(isbnList);
 
       if (invalidIsbns.length) {
@@ -70,8 +65,7 @@ const App = () => {
     }
   };
 
-
-  const SearchResult = ({ result }) => {
+  const SearchResult = ({ result }: { result: any }) => {
     if (!result) {
       return null;
     }
